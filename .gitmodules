@@ -34,3 +34,12 @@
 [submodule "vendor/bundles/Symfony/Bundle/AsseticBundle"]
 	path = vendor/bundles/Symfony/Bundle/AsseticBundle
 	url = http://github.com/symfony/AsseticBundle.git
+[submodule "vendor/bundles/PropelBundle"]
+	path = vendor/bundles/PropelBundle
+	url = git://github.com/propelorm/PropelBundle.git
+[submodule "vendor/phing"]
+	path = vendor/phing
+	url = https://github.com/Xosofox/phing.git
+[submodule "vendor/propel"]
+	path = vendor/propel
+	url = https://github.com/propelorm/Propel.git

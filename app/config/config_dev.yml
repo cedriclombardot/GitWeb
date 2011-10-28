@@ -18,6 +18,14 @@ monolog:
         firephp:
             type:  firephp
             level: info
+propel:
+    dbal:
+        driver:               mysql
+        user:                 root
+        password:             null
+        dsn:                  mysql:host=localhost;dbname=gitweb;charset=UTF8
+        options:              {}
+        attributes:           {}
 
 assetic:
     use_controller: true
