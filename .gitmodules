@@ -43,3 +43,6 @@
 [submodule "vendor/propel"]
 	path = vendor/propel
 	url = https://github.com/propelorm/Propel.git
+[submodule "vendor/bundles/Propel/PropelBundle"]
+	path = vendor/bundles/Propel/PropelBundle
+	url = https://github.com/propelorm/PropelBundle.git
