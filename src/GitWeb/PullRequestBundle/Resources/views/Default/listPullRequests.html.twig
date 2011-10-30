@@ -1,0 +1,20 @@
+{% extends "GitWebBaseBundle::layout.html.twig" %}
+{% use "GitWebRepositoryBundle:Default:_common/header.html.twig" %}
+{% set active="pr" %}
+{% use "GitWebRepositoryBundle:Default:_common/tabs.html.twig" %}
+
+{% block body %}
+	{{ block('repo_head') }}
+	{{ block('repo_tabs') }}
+
+<div class="clearfix content span24">
+	{% for pull_request in repository.PullRequestsRelatedByRepositoryTargetId %}
+	<div class="alert-message block-message info">
+		<h2><span>#{{ pull_request.id }}</span> : <a href="{{ path('show_pull_request', { "id": pull_request.id }) }}">{{ pull_request.title }}</a></h2>
+		<p>
+			{{ pull_request.description }}
+		</p>
+	</div>
+	{% endfor %}
+</div>
+{% endblock %}

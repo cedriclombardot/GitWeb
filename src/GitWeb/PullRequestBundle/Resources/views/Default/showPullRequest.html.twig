@@ -1,0 +1,49 @@
+{% extends "GitWebBaseBundle::layout.html.twig" %}
+{% use "GitWebRepositoryBundle:Default:_common/header.html.twig" %}
+{% set active="pr" %}
+{% use "GitWebRepositoryBundle:Default:_common/tabs.html.twig" %}
+
+{% block body %}
+	{{ block('repo_head') }}
+	{{ block('repo_tabs') }}
+
+<div class="clearfix content span24 alert-message block-message info">
+	<h1><span>#{{ pull_request.id }}</span> : <a href="{{ path('show_pull_request', { "id": pull_request.id }) }}">{{ pull_request.title }}</a></h1>
+	
+	<div class="content span24">
+		{% set source_repo = pull_request.RepositoryRelatedByRepositorySrcId %}
+		<b>Integration of {{ source_repo.user.username }}/{{ source_repo.name }}:{{ pull_request.RepositorySrcBranch }} into {{ repository.user.username }}/{{ repository.name }}:{{ pull_request.RepositoryTargetBranch }}</b>
+	</div>
+	
+	<div class="content span24">
+		{{- pull_request.description -}}
+	</div>
+	
+</div>
+
+<div class="commits content span24">
+	<h2> Commits </h2>
+	<ul>
+		{% for commit in commits %}
+		<li>{{ commit.hash }} {{ commit.message }} - {{ commit.relative_date }}</li>
+		{% endfor %}
+	</ul>
+</div>
+
+<div class="stats content span24">
+	<h2> Files </h2>
+	<ul>
+		{% for stat in stats %}
+		<li>{{ stat.file }} <span>+{{ stat.additions }} & - {{ stat.deletions }}</span></li>
+		{% endfor %}
+	</ul>
+</div>
+
+
+<div class="stats content span24">
+	<h2> Diff </h2>
+	<pre class="prettyprint linenums">
+		{{- diff -}}
+	</pre>
+</div>
+{% endblock %}

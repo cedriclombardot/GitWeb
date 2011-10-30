@@ -8,9 +8,70 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 use GitWeb\RepositoryBundle\Model\RepositoryQuery;
 use GitWeb\PullRequestBundle\Model\PullRequest;
+use GitWeb\PullRequestBundle\Model\PullRequestQuery;
 
 class DefaultController extends Controller
 {
+	/**
+     * @Route("/show/{id}", name="show_pull_request")
+     * @Template()
+     */
+    public function showPullRequestAction($id)
+    {
+        $pr = PullRequestQuery::create()
+                ->innerJoinRepositoryRelatedByRepositoryTargetId()
+                ->joinWith('RepositoryRelatedByRepositoryTargetId')
+                ->filterById($id)
+                ->findOne();
+
+        //Log
+        $src = $pr->getRepositoryRelatedByRepositorySrcId();
+        $gitFolder = $this->container->getParameter('kernel.root_dir').DIRECTORY_SEPARATOR.$src->getClonePath();
+
+        $head = exec('cd '.$gitFolder.' && /usr/bin/git rev-parse --branches='.$pr->getRepositorySrcBranch().' HEAD');
+
+        exec('cd '.$gitFolder.' && /usr/bin/git log '.$pr->getRepositorySrcBranch().' '.$src->getForkedAt().'..'.$head.' --pretty=format:\'{ "message": "%s", "author_email": "%ae", "author_name": "%an", "hash": "%H", "relative_date": "%ar" }\' ', $commits);
+        exec('cd '.$gitFolder.' && /usr/bin/git diff '.$src->getForkedAt().'..'.$head, $diff);
+        exec('cd '.$gitFolder.' && /usr/bin/git diff '.$src->getForkedAt().'..'.$head.' | git apply --numstat --summary', $stats);
+
+        //Prepare stats
+        $o_stats = array();
+        foreach ($stats as $stat) {
+            //3 1 README.md
+            preg_match('#([0-9]+)(.+)([0-9]+)(.+)#', $stat, $tmp);
+
+            $o_stats[] = array(
+                'additions' => $tmp[1],
+                'deletions'  => $tmp[3],
+                'file'      => trim($tmp[4]),
+            );
+        }
+
+        //Prépare commits
+        array_walk($commits, function(&$commit) { $commit=json_decode($commit); });
+
+        return array(
+            'repository'   => $pr->getRepositoryRelatedByRepositoryTargetId(),
+            'pull_request' => $pr,
+            'commits'      => $commits,
+            'stats'        => $o_stats,
+            'diff'         => implode("\n", $diff),
+        );
+    }
+
+    /**
+     * @Route("/list/{username}/{repository_name}", name="list_pull_requests")
+     * @Template()
+     */
+    public function listPullRequestsAction($username, $repository_name)
+    {
+        $repository = $this->findRepository($username, $repository_name);
+
+        return array(
+            'repository' => $repository,
+        );
+    }
+
     /**
      * @Route("/{repository_name}/{branch}")
      * @Template()
@@ -52,7 +113,6 @@ class DefaultController extends Controller
         );
     }
 
-
     /**
      *
      * @param string $username
@@ -69,6 +129,8 @@ class DefaultController extends Controller
                                         ->filterByUsernameCanonical($username)
                                     ->endUse()
                                 ->joinWith('User')
+                                ->innerJoinPullRequestRelatedByRepositoryTargetId()
+                                ->joinWith('PullRequestRelatedByRepositoryTargetId')
                                 ->findOne();
 
         if (!$repositoy) {

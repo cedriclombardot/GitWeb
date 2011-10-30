@@ -1,8 +1,8 @@
 {% block repo_tabs %}
 <div class="content span24">
 	<ul class="tabs">
-		<li class="active"><a href="#">Code</a></li>
-		<li><a href="#">Pull Requests [{{ repository.countPullRequestsRelatedByRepositoryTargetId }}]</a></li>
+		<li {% if active == "code" %}class="active"{% endif %}><a href="#">Code</a></li>
+		<li {% if active == "pr" %}class="active"{% endif %} ><a href="{{ path("list_pull_requests", { "username": repository.user.username, "repository_name": repository.name }) }}">Pull Requests [{{ repository.countPullRequestsRelatedByRepositoryTargetId }}]</a></li>
 	</ul>
 </div>
 {% endblock %}
