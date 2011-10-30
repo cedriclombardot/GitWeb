@@ -1,0 +1,59 @@
+<div class="content span24 browser">
+	<table cellspacing="0" cellpadding="0" class="tree-browser">
+        <tbody>
+        	<tr class="header">
+		          <th></th>
+		          <th>name</th>
+		          <th>age</th>
+		          <th>message</th>
+        	</tr>
+        	{% for folder in folders %}
+        	<tr>
+        		<td class="icon">
+        			<img src="https://a248.e.akamai.net/assets.github.com/images/icons/dir.png" alt="directory" />
+        		</td>
+        		<td class="content">
+        			<a href="{{ path('gitweb_repository_default_show_tree', {
+        				"username": repository.user.username,
+        				"repository_name": repository.name,
+        				"tree": tree|convert_for_url ~ folder
+        			}) }}">
+        				{{ folder }}
+        			</a>
+        		</td>
+        		<td class="age">
+        				{{ logs[folder] ? logs[folder].relative_date : "" }}
+        		</td>
+        		<td class="message">
+        			{{ logs[folder] ? logs[folder].message : "" }} [<a>{{ logs[folder] ? logs[folder].author_name : "" }}</a>]
+        		</td>
+        	</tr>
+        	{% endfor %}
+        	
+        	{% for file in files %}
+        	<tr>
+        		<td class="icon">
+        			<img src="https://a248.e.akamai.net/assets.github.com/images/icons/txt.png" alt="file" />
+        		</td>
+        		<td class="content">
+        			<a href="#">
+        				<a href="{{ path('gitweb_repository_default_show_blob', {
+	        				"username": repository.user.username,
+	        				"repository_name": repository.name,
+	        				"file": tree|convert_for_url ~ file
+	        			}) }}">
+        					{{ file }}
+        				</a>
+        			</a>
+        		</td>
+        		<td class="age">
+        			{{ logs[file] ? logs[file].relative_date : "" }}
+        		</td>
+        		<td class="message">
+        			{{ logs[file] ? logs[file].message : "" }} [<a>{{ logs[file] ? logs[file].author_name : "" }}</a>]
+        		</td>
+        	</tr>
+        	{% endfor %}
+		</tbody>
+	</table>
+</div>

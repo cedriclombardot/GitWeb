@@ -1,0 +1,22 @@
+{% block repo_head %}
+<div class="content span24">
+	<h1 class="span18">
+		{{ repository.user.username }} 
+		/ 
+		<a href="{{ path('gitweb_repository_default_show', { "username": repository.user.username, "repository_name": repository.name }) }}">
+			{{ repository.name }}
+		</a>
+	</h1>
+	<div class="sidebar">
+		{% if repository.user.id != app.user.id %}
+			<input type="button" class="btn" onclick="document.location.href='{{ path('gitweb_repository_default_fork', { "username": repository.user.username, "repository_name": repository.name }) }}'; " value="Fork" />
+		{% endif %}
+		
+		{% if repository.user.id == app.user.id and repository.forkedFromId > 0 %}
+			<input type="button" class="btn" onclick="document.location.href='{{ path('gitweb_pullrequest_default_index', { "branch": "master", "repository_name": repository.name }) }}'; " value="Pull Request" />
+		{% endif %}
+		
+	</div>
+</div>
+
+{% endblock %}

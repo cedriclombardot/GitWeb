@@ -1,0 +1,13 @@
+<div class="block">
+	<h2>Your repositories</h2>
+	
+	<ul>
+	{% for repository in repositories %}
+		<li>
+			<a href="{{ path('gitweb_repository_default_show', { "username": name, "repository_name": repository.name }) }}">
+				{{ name }}/<b>{{ repository.name }}</b>
+			</a>
+		</li>
+	{% endfor %}
+	</ul>
+</div>

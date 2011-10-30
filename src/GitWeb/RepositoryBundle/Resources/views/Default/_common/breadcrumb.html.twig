@@ -1,0 +1,41 @@
+{% block repo_breadcrumb %}
+<div class="content span24">
+	<ul class="breadcrumb">
+		<li>
+			<a href="{{ path('gitweb_repository_default_show', { "username": repository.user.username, "repository_name": repository.name }) }}">
+				{{ repository.name }}
+			</a>
+		</li>
+
+		{% for key, step in tree|to_breadcrumb %}
+			{% if key == 0 %}
+				{% set path =  step %}
+			{% else %}
+				{% set path = path ~ "/" ~ step %}
+			{% endif %}
+			{% if key+1 != tree|to_breadcrumb|length or file is defined %}
+				<li>
+					<a href="{{ path('gitweb_repository_default_show_tree', {
+        				"username": repository.user.username,
+        				"repository_name": repository.name,
+        				"tree": path|convert_for_url
+        			}) }}">
+						{{ step }}
+					</a> /
+				</li>
+			{% else %}
+				<li class="active">
+					<a href="{{ path('gitweb_repository_default_show_tree', {
+        				"username": repository.user.username,
+        				"repository_name": repository.name,
+        				"tree": path|convert_for_url
+        			}) }}">
+						{{ step }}
+					</a>
+				</li>
+			{% endif %}
+		{% endfor %}
+		
+	</ul>
+</div>
+{% endblock %}

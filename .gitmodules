@@ -46,3 +46,9 @@
 [submodule "vendor/bundles/Propel/PropelBundle"]
 	path = vendor/bundles/Propel/PropelBundle
 	url = https://github.com/propelorm/PropelBundle.git
+[submodule "vendor/bundles/FOS/UserBundle"]
+	path = vendor/bundles/FOS/UserBundle
+	url = git://github.com/FriendsOfSymfony/FOSUserBundle.git
+[submodule "vendor/bundles/Admingenerator/UserBundle"]
+	path = vendor/bundles/Admingenerator/UserBundle
+	url = git://github.com/cedriclombardot/AdmingeneratorUserBundle.git

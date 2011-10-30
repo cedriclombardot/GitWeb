@@ -1,0 +1,11 @@
+{% extends "GitWebBaseBundle::layout.html.twig" %}
+
+{% block body %}
+	<div class="content span18">
+		Hello {{ name }}!
+	</div>
+	
+	<div class="span6 repo_list">
+		{% render "GitWebRepositoryBundle:Default:list" %}
+	</div>
+{% endblock %}

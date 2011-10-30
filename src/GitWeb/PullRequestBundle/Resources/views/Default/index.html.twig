@@ -1,0 +1,32 @@
+{% extends "GitWebBaseBundle::layout.html.twig" %}
+
+{% block body %}
+<div class="content">
+	<h1> Send a pull request</h1>
+	
+	<form action="{{ path('gitweb_pullrequest_default_index', {"repository_name": repository_name, "branch": branch }) }}" method="post" {{ form_enctype(form) }}>
+	    {{ form_errors(form) }}
+		<div class="clearfix">
+			{{ form_label(form.title) }}
+	    	{{ form_errors(form.title) }}
+	    	<div class="input">
+				{{ form_widget(form.title, { 'attr':  { "class": "xxlarge" }}) }}
+			</div>
+	    </div>
+	    
+	    <div class="clearfix">
+	    	{{ form_label(form.description) }}
+	    	{{ form_errors(form.description) }}
+	    	<div class="input">
+	    		{{ form_widget(form.description, { 'attr':  { "class": "xxlarge" }} ) }}
+	    	</div>
+		</div>
+		 
+	    {{ form_rest(form) }}
+	
+		<div class="actions">
+	   		<input type="submit" class="btn primary" value="Send Pull Request" />
+	    </div>
+	</form>
+</div>
+{% endblock %}

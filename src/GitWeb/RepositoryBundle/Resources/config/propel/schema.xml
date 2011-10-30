@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database name="default" namespace="GitWeb\RepositoryBundle\Model" defaultIdMethod="native">
+
+    <table name="repository">
+    	 <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+    	 <column name="user_id" type="integer" required="true" />
+    	 
+    	 <foreign-key foreignTable="user" onDelete="cascade" onUpdate="cascade">
+    	     <reference local="user_id" foreign="id" />
+    	 </foreign-key>
+    	 
+    	 <column name="name" type="varchar" size="255" required="true" primaryString="true" description="The repository name" />
+    	 <column name="description" type="varchar" size="555" required="false" />
+    	 <column name="bare_path" type="longvarchar" required="false" description="The path to find the repository in server related to app/" />
+    	 <column name="clone_path" type="longvarchar" required="false" description="The path to find the clonned repository in server related to app/" />
+    	     	 
+    	 <column name="forked_from_id" type="integer" required="false" description="The original repository" />
+    	 <column name="forked_at" type="varchar" size="555" required="false" description="The hash of the last commint on the main repository when you fork" />
+    	 
+    	 <foreign-key foreignTable="repository" onDelete="setnull" onUpdate="cascade">
+    	     <reference local="forked_from_id" foreign="id" />
+    	 </foreign-key>
+    	 
+    	 <index>
+	      	<index-column name="name" />
+	     </index>
+	     
+	     <unique>
+	       	<unique-column name="name" />
+	       	<unique-column name="user_id" />
+	     </unique>
+     
+    	 <behavior name="timestampable" />
+    </table>
+    
+</database>

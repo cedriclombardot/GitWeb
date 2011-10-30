@@ -1,0 +1,17 @@
+{% extends "GitWebBaseBundle::layout.html.twig" %}
+{% use "GitWebRepositoryBundle:Default:_common/header.html.twig" %}
+{% use "GitWebRepositoryBundle:Default:_common/tabs.html.twig" %}
+{% use "GitWebRepositoryBundle:Default:_common/infos.html.twig" %}
+{% use "GitWebRepositoryBundle:Default:_common/tabs_code.html.twig" %}
+{% use "GitWebRepositoryBundle:Default:_common/breadcrumb.html.twig" %}
+
+{% block body %}
+	{{ block('repo_head') }}
+	{{ block('repo_tabs') }}
+	{{ block('repo_infos') }}
+	
+	{{ block('repo_tabs_code') }}
+	{{ block('repo_breadcrumb') }}
+	
+	{% render "GitWebRepositoryBundle:Show:browse" with { "repository": repository, "tree": tree } %}
+{% endblock %}

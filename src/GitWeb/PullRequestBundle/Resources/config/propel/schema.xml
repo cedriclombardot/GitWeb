@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database name="default" namespace="GitWeb\PullRequestBundle\Model" defaultIdMethod="native">
+
+    <table name="pull_request">
+    	 <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+    	 <column name="user_id" type="integer" required="true" description="The use who have create the pull request" />
+    	 
+    	 <foreign-key foreignTable="user" onDelete="cascade" onUpdate="cascade">
+    	     <reference local="user_id" foreign="id" />
+    	 </foreign-key>
+    	 
+    	 <column name="title" type="varchar" size="255" required="true" primaryString="true" />
+    	 <column name="description" type="longvarchar" required="false" />
+    	 
+    	 <column name="repository_src_id" type="integer" required="true" description="The from repository" />
+    	 <column name="repository_src_branch" type="varchar" size="255" required="true" />
+    	 <foreign-key foreignTable="repository" onDelete="cascade" onUpdate="cascade">
+    	     <reference local="repository_src_id" foreign="id" />
+    	 </foreign-key>
+    	 
+		 <column name="repository_target_id" type="integer" required="true" description="The target repository" />
+		 <column name="repository_target_branch" type="varchar" size="255" required="true" />
+    	 <foreign-key foreignTable="repository" onDelete="cascade" onUpdate="cascade">
+    	     <reference local="repository_target_id" foreign="id" />
+    	 </foreign-key>    	     	
+    	 
+    	 <column name="start_rev" type="varchar" size="255" required="true" /> 
+     
+    	 <behavior name="timestampable" />
+    </table>
+    
+</database>
