@@ -1,4 +1,5 @@
 {% block repo_tabs %}
+{% set active = active is defined ? active : "code" %}
 <div class="content span24">
 	<ul class="tabs">
 		<li {% if active == "code" %}class="active"{% endif %}><a href="#">Code</a></li>
