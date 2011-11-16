@@ -22,6 +22,8 @@ git clone app/repositories/admin/demo.git app/repositories/admin/demo.clone
 ./rebuild.sh
 ````
 
+## Test
 
+Connect with user/user and go to http://gitweb.local/app_dev.php/admin/demo, you can fork the repo 
 
 
