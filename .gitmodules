@@ -55,3 +55,6 @@
 [submodule "vendor/GitFS"]
 	path = vendor/GitFS
 	url = git://github.com/cedriclombardot/GitFs.git
+[submodule "vendor/monolog"]
+	path = vendor/monolog
+	url = https://github.com/Seldaek/monolog.git
