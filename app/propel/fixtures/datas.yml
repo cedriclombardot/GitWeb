@@ -1,0 +1,25 @@
+\FOS\UserBundle\Propel\User:
+    admin:
+        Username: admin
+        UsernameCanonical: admin
+        Password: admin
+        Email: admin@admin.com
+        EmailCanonical: admin@admin.com
+        Enabled: 1
+        algorithm: sha512 
+    user:
+        Username: user
+        UsernameCanonical: user
+        Password: user
+        Email: user@user.com
+        EmailCanonical: user@user.com
+        Enabled: 1
+        algorithm: sha512       
+\GitWeb\RepositoryBundle\Model\Repository:
+    "admin/demo":
+        user_id: admin
+        name: demo
+        description: A demo repository
+        bare_path: repositories/admin/demo.git
+        clone_path: repositories/admin/demo.clone
+        
