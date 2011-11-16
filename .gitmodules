@@ -52,3 +52,6 @@
 [submodule "vendor/bundles/Admingenerator/UserBundle"]
 	path = vendor/bundles/Admingenerator/UserBundle
 	url = git://github.com/cedriclombardot/AdmingeneratorUserBundle.git
+[submodule "vendor/GitFS"]
+	path = vendor/GitFS
+	url = git://github.com/cedriclombardot/GitFs.git
