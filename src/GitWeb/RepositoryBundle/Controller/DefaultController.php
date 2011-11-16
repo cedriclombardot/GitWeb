@@ -73,7 +73,9 @@ class DefaultController extends Controller
         $user = $this->get('security.context')->getToken()->getUser();
 
         $gitFolder = $this->container->getParameter('kernel.root_dir').DIRECTORY_SEPARATOR.$repository->getClonePath();
-        $lastLog = $this->getGitLog($gitFolder);
+
+        $repo = new \GitFS\Repository($gitFolder);
+        $lastLog = $repo->getLastLog();
 
         // Copy the propel object
         $fork = $repository->copy();
@@ -87,37 +89,13 @@ class DefaultController extends Controller
         //And now fork
         $origin = $this->container->getParameter('kernel.root_dir').DIRECTORY_SEPARATOR;
         exec('cd '.$origin.' && cp -rP "'.$repository->getBarePath().'" "'.$fork->getBarePath().'" ');
-        exec('cd '.$origin.' && git clone "'.$fork->getBarePath().'" "'.$fork->getClonePath().'" ');
+
+        $repo = new \GitFS\BareRepository($fork->getBarePath());
+        $repo->doClone($fork->getClonePath());
 
         return $this->redirect($this->generateUrl('gitweb_repository_default_show', array('username' => $user->getUsername(), 'repository_name' => $fork->getName() )));
     }
 
-    //@todo make a service to find log
-    /**
-     * Option	Description of Output
-        %H	Commit hash
-        %h	Abbreviated commit hash
-        %T	Tree hash
-        %t	Abbreviated tree hash
-        %P	Parent hashes
-        %p	Abbreviated parent hashes
-        %an	Author name
-        %ae	Author e-mail
-        %ad	Author date (format respects the –date= option)
-        %ar	Author date, relative
-        %cn	Committer name
-        %ce	Committer email
-        %cd	Committer date
-        %cr	Committer date, relative
-        %s	Subject
-     * @param unknown_type $gitFolder
-     * @param unknown_type $file
-     */
-    protected function getGitLog($gitFolder)
-    {
-        $output = exec('cd '.$gitFolder.' && /usr/bin/git log master --pretty=format:\'{ "message": "%s", "author_email": "%ae", "author_name": "%an", "hash": "%H", "relative_date": "%ar" }\' -1 ');
-        return json_decode($output);
-    }
 
     /**
      *

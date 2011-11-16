@@ -7,7 +7,7 @@
 		          <th>age</th>
 		          <th>message</th>
         	</tr>
-        	{% for folder in folders %}
+        	{% for folder in FilesCollection.directories %}
         	<tr>
         		<td class="icon">
         			<img src="https://a248.e.akamai.net/assets.github.com/images/icons/dir.png" alt="directory" />
@@ -22,15 +22,15 @@
         			</a>
         		</td>
         		<td class="age">
-        				{{ logs[folder] ? logs[folder].relative_date : "" }}
+        				{{ folder.getLastLog ? folder.getLastLog.relativeDate : "" }}
         		</td>
         		<td class="message">
-        			{{ logs[folder] ? logs[folder].message : "" }} [<a>{{ logs[folder] ? logs[folder].author_name : "" }}</a>]
+        			{{ folder.getLastLog ? folder.getLastLog.message : "" }} [<a>{{ folder.getLastLog ? folder.getLastLog.authorName : "" }}</a>]
         		</td>
         	</tr>
         	{% endfor %}
         	
-        	{% for file in files %}
+        	{% for file in FilesCollection.files %}
         	<tr>
         		<td class="icon">
         			<img src="https://a248.e.akamai.net/assets.github.com/images/icons/txt.png" alt="file" />
@@ -47,10 +47,10 @@
         			</a>
         		</td>
         		<td class="age">
-        			{{ logs[file] ? logs[file].relative_date : "" }}
+        			{{ file.getLastLog ? file.getLastLog.relativeDate : "" }}
         		</td>
         		<td class="message">
-        			{{ logs[file] ? logs[file].message : "" }} [<a>{{ logs[file] ? logs[file].author_name : "" }}</a>]
+        			{{ file.getLastLog ? file.getLastLog.message : "" }} [<a>{{ file.getLastLog ? file.getLastLog.authorName : "" }}</a>]
         		</td>
         	</tr>
         	{% endfor %}

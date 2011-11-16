@@ -16,6 +16,7 @@ $loader->registerNamespaces(array(
     'Propel'           => __DIR__.'/../vendor/bundles',
     'FOS'              => __DIR__.'/../vendor/bundles',
     'Admingenerator'   => __DIR__.'/../vendor/bundles',
+    'GitFS'            => __DIR__.'/../vendor/GitFS/src',
 ));
 $loader->registerPrefixes(array(
     'Twig_Extensions_' => __DIR__.'/../vendor/twig-extensions/lib',
